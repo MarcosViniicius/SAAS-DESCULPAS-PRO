@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { SparklesIcon } from '@heroicons/react/24/outline'
+import { SparklesIcon, ClipboardDocumentIcon } from '@heroicons/react/24/outline'
 
 export default function GenerateForm() {
   const [loading, setLoading] = useState(false)
@@ -27,7 +27,7 @@ export default function GenerateForm() {
       })
 
       const data = await response.json()
-      setResult(data.excuse)
+      setResult(data.excuse?.replace(/^"|"$/g, '') || 'Desculpe, ocorreu um erro ao gerar sua desculpa.')
     } catch (error) {
       console.error('Erro ao gerar desculpa:', error)
       setResult('Desculpe, ocorreu um erro ao gerar sua desculpa. Tente novamente.')
@@ -36,18 +36,29 @@ export default function GenerateForm() {
     }
   }
 
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(result)
+      alert('Texto copiado com sucesso!')
+    } catch (error) {
+      console.error('Erro ao copiar texto:', error)
+      alert('Erro ao copiar texto. Tente novamente.')
+    }
+  }
+
   return (
-    <div className="card">
+    <div className="space-y-8">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label htmlFor="situation" className="block text-sm font-medium text-gray-700">
             Situação
           </label>
-          <input
-            type="text"
+          <textarea
             id="situation"
+            name="situation"
+            rows={3}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-            placeholder="Ex: Reunião importante, Entrega de trabalho..."
+            placeholder="Descreva a situação para a qual você precisa de uma desculpa..."
             value={formData.situation}
             onChange={(e) => setFormData({ ...formData, situation: e.target.value })}
             required
@@ -56,13 +67,14 @@ export default function GenerateForm() {
 
         <div>
           <label htmlFor="context" className="block text-sm font-medium text-gray-700">
-            Contexto Adicional
+            Contexto Adicional (opcional)
           </label>
           <textarea
             id="context"
-            rows={3}
+            name="context"
+            rows={2}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-            placeholder="Adicione detalhes que tornarão a desculpa mais convincente..."
+            placeholder="Adicione qualquer contexto relevante..."
             value={formData.context}
             onChange={(e) => setFormData({ ...formData, context: e.target.value })}
           />
@@ -74,6 +86,7 @@ export default function GenerateForm() {
           </label>
           <select
             id="tone"
+            name="tone"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
             value={formData.tone}
             onChange={(e) => setFormData({ ...formData, tone: e.target.value })}
@@ -87,22 +100,30 @@ export default function GenerateForm() {
 
         <button
           type="submit"
-          className="btn-primary w-full flex justify-center items-center"
           disabled={loading}
+          className="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50"
         >
           {loading ? (
-            <SparklesIcon className="animate-spin h-5 w-5 mr-2" />
+            <>
+              <SparklesIcon className="animate-spin -ml-1 mr-2 h-5 w-5" />
+              Gerando...
+            </>
           ) : (
-            <SparklesIcon className="h-5 w-5 mr-2" />
+            'Gerar Desculpa'
           )}
-          {loading ? 'Gerando...' : 'Gerar Desculpa'}
         </button>
       </form>
 
       {result && (
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Sua Desculpa:</h3>
-          <p className="text-gray-700">{result}</p>
+        <div className="mt-6 p-4 bg-white rounded-lg shadow relative">
+          <p className="text-gray-800 whitespace-pre-wrap">{result}</p>
+          <button
+            onClick={handleCopy}
+            className="absolute top-2 right-2 p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100"
+            title="Copiar texto"
+          >
+            <ClipboardDocumentIcon className="h-5 w-5" />
+          </button>
         </div>
       )}
     </div>
