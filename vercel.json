@@ -1,19 +1,6 @@
 {
+  "framework": "nextjs",
   "buildCommand": "next build",
   "devCommand": "next dev",
-  "installCommand": "npm install",
-  "framework": "nextjs",
-  "env": {
-    "NEXT_PUBLIC_APP_URL": "https://${VERCEL_URL}",
-    "OPENROUTER_API_KEY": "@openrouter-api-key",
-    "STRIPE_SECRET_KEY": "@stripe-secret-key",
-    "STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key"
-  },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1",
-      "continue": true
-    }
-  ]
+  "installCommand": "npm install"
 } 
