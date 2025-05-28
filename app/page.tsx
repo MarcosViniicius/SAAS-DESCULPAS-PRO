@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { SparklesIcon } from '@heroicons/react/24/outline'
 import DonateButton from './components/DonateButton'
-import AdUnit from './components/AdUnit'
 
 export default function Home() {
   return (
@@ -24,15 +23,6 @@ export default function Home() {
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Anúncio superior */}
-        <div className="mb-12">
-          <AdUnit 
-            slotId="6234354360" 
-            format="auto"
-            style={{ minHeight: '250px', width: '100%' }}
-          />
-        </div>
-
         <div className="text-center">
           <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
             <span className="block">Nunca mais fique sem uma</span>
@@ -81,15 +71,6 @@ export default function Home() {
               Em apenas alguns cliques, tenha uma desculpa convincente pronta para usar.
             </p>
           </div>
-        </div>
-
-        {/* Anúncio inferior */}
-        <div className="mt-16">
-          <AdUnit 
-            slotId="9841592733" 
-            format="auto"
-            style={{ minHeight: '280px', width: '100%' }}
-          />
         </div>
       </div>
     </main>
