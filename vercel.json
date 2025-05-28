@@ -8,5 +8,12 @@
     "OPENROUTER_API_KEY": "@openrouter-api-key",
     "STRIPE_SECRET_KEY": "@stripe-secret-key",
     "STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key"
-  }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1",
+      "continue": true
+    }
+  ]
 } 
