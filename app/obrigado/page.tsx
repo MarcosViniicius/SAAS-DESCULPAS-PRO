@@ -1,25 +1,28 @@
 import Link from 'next/link'
-import { HeartIcon } from '@heroicons/react/24/solid'
+import { CheckCircleIcon } from '@heroicons/react/24/outline'
 
 export default function ThankYouPage() {
   return (
-    <main className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="max-w-2xl mx-auto px-4 py-16 text-center">
-        <HeartIcon className="h-16 w-16 text-red-500 mx-auto mb-6" />
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Muito Obrigado pelo Seu Apoio!
-        </h1>
-        <p className="text-xl text-gray-600 mb-8">
-          Sua doação ajuda a manter o Desculpas Pro funcionando e nos permite continuar
-          desenvolvendo novas funcionalidades.
-        </p>
-        <Link
-          href="/"
-          className="inline-flex items-center px-6 py-3 bg-primary hover:bg-opacity-90 text-white rounded-lg transition-colors"
-        >
-          Voltar para o Início
-        </Link>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 text-center">
+        <div>
+          <CheckCircleIcon className="mx-auto h-12 w-12 text-green-500" />
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+            Obrigado pela sua doação!
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Sua contribuição ajuda a manter o Desculpas Pro funcionando e melhorando cada vez mais.
+          </p>
+        </div>
+        <div>
+          <Link
+            href="/"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+          >
+            Voltar para a página inicial
+          </Link>
+        </div>
       </div>
-    </main>
+    </div>
   )
 } 
