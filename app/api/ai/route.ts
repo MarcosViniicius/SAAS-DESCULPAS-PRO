@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { generateText } from '../../lib/googleai';
+import { generateText } from '../../../app/lib/googleai';
 
 export async function POST(request: Request) {
   try {
