@@ -24,7 +24,7 @@ Responda apenas com a desculpa em si.`;
 export async function generateText(prompt: string) {
   try {
     // Criar uma instância do modelo
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.0-pro' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     // Combinar o prompt do sistema com o prompt do usuário
     const fullPrompt = `${systemPrompt}
@@ -47,7 +47,7 @@ export async function generateText(prompt: string) {
 export async function generateTextAndImage(prompt: string, image: string) {
   try {
     // Criar uma instância do modelo
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.0-pro-vision' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     // Combinar o prompt do sistema com o prompt do usuário
     const fullPrompt = `${systemPrompt}\n\nSolicitação do usuário: ${prompt}`;
