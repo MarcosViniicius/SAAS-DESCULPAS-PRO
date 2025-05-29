@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import mercadopago from 'mercadopago'
-import type { CreatePreferencePayload } from 'mercadopago/models/preferences/create-payload.model'
+import { MercadoPagoConfig, Preference } from 'mercadopago'
 
 // Definindo as interfaces necessárias
 interface PreferenceItem {
@@ -32,8 +31,8 @@ if (!process.env.MERCADO_PAGO_ACCESS_TOKEN) {
   throw new Error('MERCADO_PAGO_ACCESS_TOKEN não configurado no ambiente')
 }
 
-mercadopago.configure({
-  access_token: process.env.MERCADO_PAGO_ACCESS_TOKEN
+const client = new MercadoPagoConfig({ 
+  accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN 
 })
 
 // Função para formatar a data no padrão do Mercado Pago
@@ -65,7 +64,8 @@ export async function POST(request: NextRequest) {
     // Data de expiração: 24 horas a partir de agora
     const expirationDate = new Date(Date.now() + 24 * 60 * 60 * 1000)
 
-    const preference: CreatePreferencePayload = {
+    const preference = new Preference(client)
+    const preferenceData = {
       items: [
         {
           title: 'Doação para Desculpas Pro',
@@ -87,12 +87,12 @@ export async function POST(request: NextRequest) {
       auto_return: 'approved'
     }
 
-    const response = await mercadopago.preferences.create(preference)
+    const response = await preference.create({ body: preferenceData })
 
     // Criar uma nova resposta para evitar o erro de objeto bloqueado
     return NextResponse.json({ 
-      url: response.body.init_point,
-      preferenceId: response.body.id,
+      url: response.init_point,
+      preferenceId: response.id,
     }, {
       status: 200,
       headers: {
