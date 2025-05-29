@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import mercadopago from 'mercadopago'
+import type { PreferencesCreateData } from 'mercadopago/models/preferences/create.model'
 
 // Configurar o SDK do Mercado Pago com o access token
 if (!process.env.MERCADO_PAGO_ACCESS_TOKEN) {
@@ -43,9 +44,9 @@ export async function POST(request: NextRequest) {
       items: [
         {
           title: 'Doação para Desculpas Pro',
-          unit_price: amount,
+          unit_price: Number(amount),
           quantity: 1,
-          currency_id: 'BRL',
+          currency_id: 'BRL'
         },
       ],
       back_urls: {
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
       expires: true,
       expiration_date_to: formatExpirationDate(expirationDate),
       auto_return: 'approved'
-    }
+    } as any
 
     const response = await mercadopago.preferences.create(preference)
 
