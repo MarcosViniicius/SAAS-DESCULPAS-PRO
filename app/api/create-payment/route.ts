@@ -68,6 +68,7 @@ export async function POST(request: NextRequest) {
     const preferenceData = {
       items: [
         {
+          id: new Date().getTime().toString(),
           title: 'Doação para Desculpas Pro',
           unit_price: Number(amount),
           quantity: 1,
