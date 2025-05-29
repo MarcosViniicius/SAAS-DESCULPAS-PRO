@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import mercadopago from 'mercadopago'
+import type { CreatePreferencePayload } from 'mercadopago/models/preferences/create-payload.model'
 
 // Definindo as interfaces necessárias
 interface PreferenceItem {
@@ -64,7 +65,7 @@ export async function POST(request: NextRequest) {
     // Data de expiração: 24 horas a partir de agora
     const expirationDate = new Date(Date.now() + 24 * 60 * 60 * 1000)
 
-    const preference: PreferenceRequest = {
+    const preference: CreatePreferencePayload = {
       items: [
         {
           title: 'Doação para Desculpas Pro',
