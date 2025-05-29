@@ -1,7 +1,12 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+// Verificar se a chave da API está configurada
+if (!process.env.GOOGLE_AI_API_KEY) {
+  throw new Error('GOOGLE_AI_API_KEY não configurada no ambiente');
+}
+
 // Configurar o modelo Gemini
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_KEY || '');
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY);
 
 // Prompt do sistema para melhorar a qualidade das respostas
 const systemPrompt = `Você é um especialista em criar desculpas convincentes. 
