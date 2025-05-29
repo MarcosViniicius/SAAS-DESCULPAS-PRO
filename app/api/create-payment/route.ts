@@ -1,6 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
 import mercadopago from 'mercadopago'
-import type { PreferencesCreateData } from 'mercadopago/models/preferences/create.model'
+
+// Definindo as interfaces necessárias
+interface PreferenceItem {
+  title: string;
+  unit_price: number;
+  quantity: number;
+  currency_id: "ARS" | "BRL" | "CLP" | "COP" | "MXN" | "PEN" | "UYU" | "VES";
+}
+
+interface PreferenceBackUrls {
+  success: string;
+  failure: string;
+  pending: string;
+}
+
+interface PreferenceRequest {
+  items: PreferenceItem[];
+  back_urls: PreferenceBackUrls;
+  notification_url?: string;
+  statement_descriptor?: string;
+  external_reference?: string;
+  expires: boolean;
+  expiration_date_to: string;
+  auto_return: "approved" | "all";
+}
 
 // Configurar o SDK do Mercado Pago com o access token
 if (!process.env.MERCADO_PAGO_ACCESS_TOKEN) {
@@ -40,7 +64,7 @@ export async function POST(request: NextRequest) {
     // Data de expiração: 24 horas a partir de agora
     const expirationDate = new Date(Date.now() + 24 * 60 * 60 * 1000)
 
-    const preference = {
+    const preference: PreferenceRequest = {
       items: [
         {
           title: 'Doação para Desculpas Pro',
@@ -60,7 +84,7 @@ export async function POST(request: NextRequest) {
       expires: true,
       expiration_date_to: formatExpirationDate(expirationDate),
       auto_return: 'approved'
-    } as any
+    }
 
     const response = await mercadopago.preferences.create(preference)
 
