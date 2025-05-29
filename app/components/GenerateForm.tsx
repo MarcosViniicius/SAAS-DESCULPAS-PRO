@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { SparklesIcon, ClipboardDocumentIcon } from '@heroicons/react/24/outline'
+import DonateButton from './DonateButton'
 
 export default function GenerateForm() {
   const [loading, setLoading] = useState(false)
@@ -115,16 +116,25 @@ export default function GenerateForm() {
       </form>
 
       {result && (
-        <div className="mt-6 p-4 bg-white rounded-lg shadow relative">
-          <p className="text-gray-800 whitespace-pre-wrap">{result}</p>
-          <button
-            onClick={handleCopy}
-            className="absolute top-2 right-2 p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100"
-            title="Copiar texto"
-          >
-            <ClipboardDocumentIcon className="h-5 w-5" />
-          </button>
-        </div>
+        <>
+          <div className="mt-6 p-4 bg-white rounded-lg shadow relative">
+            <p className="text-gray-800 whitespace-pre-wrap">{result}</p>
+            <button
+              onClick={handleCopy}
+              className="absolute top-2 right-2 p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100"
+              title="Copiar texto"
+            >
+              <ClipboardDocumentIcon className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="mt-6 p-4 bg-white rounded-lg shadow text-center">
+            <p className="text-gray-800 mb-4">
+              ❤️ Gostou da desculpa? Considere fazer uma doação de apenas R$ 5 para ajudar a manter o serviço!
+            </p>
+            <DonateButton />
+          </div>
+        </>
       )}
     </div>
   )
